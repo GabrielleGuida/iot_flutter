@@ -38,10 +38,7 @@ dependencies:
   flutter_modular: ^5.0.3
   mobx: ^2.2.0
   flutter_mobx: ^2.0.6+5
-  flutter_blue: ^0.8.0
-  flutter_bluetooth_serial: ^0.4.0
   flutter_blue_plus: ^1.5.1
-  permission_handler: ^10.2.0
   dio: ^5.1.2
 
 dev_dependencies:

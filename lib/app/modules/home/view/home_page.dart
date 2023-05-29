@@ -30,21 +30,25 @@ class HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    widget.bluePlus.connectedDevices
-        .asStream()
-        .listen((List<BluetoothDevice> devices) {
-      for (BluetoothDevice device in devices) {
-        _newListDevice(device);
-        debugPrint(device.toString());
-      }
-    });
+    searchDevices();
+  }
+
+  searchDevices() async {
+    widget.bluePlus.startScan(timeout: Duration(seconds: 15));
     widget.bluePlus.scanResults.listen((List<ScanResult> results) {
       for (ScanResult result in results) {
         _newListDevice(result.device);
       }
     });
 
-    widget.bluePlus.startScan();
+    // widget.bluePlus.connectedDevices
+    //     .asStream()
+    //     .listen((List<BluetoothDevice> devices) {
+    //   for (BluetoothDevice device in devices) {
+    //     _newListDevice(device);
+    //     debugPrint(device.toString());
+    //   }
+    // });
   }
 
   ListView _buildViewDevices() {
@@ -150,7 +154,10 @@ class HomePageState extends State<HomePage> {
                         style: TextButton.styleFrom(
                           backgroundColor: Color(0xFFE8154A),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          await widget.bluePlus.stopScan();
+                          searchDevices();
+                        },
                         child: const Text(
                           "Scan",
                           style: TextStyle(color: Colors.white),
